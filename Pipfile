@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 python-dotenv = "==0.19.2"
 python-telegram-bot = "*"
+openai = "*"
 
 [dev-packages]
 

@@ -35,7 +35,7 @@ async def help_command(update: Update, context: CallbackContext) -> None:
 
 
 def get_answer(message_str) -> str:
-    """Get answer from assistant with detailed logging."""
+    """Get answer from assistant with detailed logging of run details."""
     try:
         thread = client.beta.threads.create()
         logger.info(f"Thread created: ID={thread.id}")
@@ -61,8 +61,24 @@ def get_answer(message_str) -> str:
             run = client.beta.threads.runs.retrieve(thread_id=thread.id, run_id=run.id)
             logger.info(f"Attempt {attempt}: Run Status={run.status}, Run ID={run.id}")
 
-            # Registrar detalles adicionales si es necesario
-            logger.info(f"Run details: {run}")
+            # Descomponer los detalles del objeto 'run'
+            logger.info(f"Run ID: {run.id}")
+            logger.info(f"Assistant ID: {run.assistant_id}")
+            logger.info(f"Status: {run.status}")
+            logger.info(f"Instructions: {run.instructions}")
+            logger.info(f"Model: {run.model}")
+            logger.info(f"Created At: {run.created_at}")
+            logger.info(f"Started At: {run.started_at}")
+            logger.info(f"Completed At: {run.completed_at}")
+            logger.info(f"Failed At: {run.failed_at}")
+            logger.info(f"Cancelled At: {run.cancelled_at}")
+            logger.info(f"Expires At: {run.expires_at}")
+            logger.info(f"Temperature: {run.temperature}")
+            logger.info(f"Top P: {run.top_p}")
+            logger.info(f"Response Format: {run.response_format.type}")
+            logger.info(f"Truncation Strategy: {run.truncation_strategy.type}")
+            logger.info(f"Parallel Tool Calls: {run.parallel_tool_calls}")
+            logger.info(f"Tools: {[tool.type for tool in run.tools]}")
 
             if run.status == "completed":
                 logger.info(f"Run completed successfully: Run ID={run.id}")
@@ -89,6 +105,7 @@ def get_answer(message_str) -> str:
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         return "Sorry, an error occurred while retrieving the answer."
+
 
 
 

@@ -9,7 +9,7 @@ import os
 from src.install.dependency_manager import (
     PipUpdater, PipDependencyInstaller, DependencyInstallerManager
 )
-from src.install.python_interpreter_utils import list_python_interpreters, is_pipenv_updated
+from src.install.python_interpreter_utils import PythonInterpreterUtils
 from src.install.project_installer import ProjectInstaller
 
 def limpiar_pantalla():
@@ -64,16 +64,16 @@ def iniciar():
     mostrar_mensaje_inicio()
     mostrar_version_python()
 
-    python_executable = listar_interpretes_python()
+    #python_executable = listar_interpretes_python()
 
     pip_updater = PipUpdater()
     installer_manager = DependencyInstallerManager(
         PipDependencyInstaller(), pip_updater, max_retries=3
     )
 
-    actualizar_pip(pip_updater)
+    #actualizar_pip(pip_updater)
     verificar_dependencias(installer_manager, 'requirements.txt')
-    actualizar_pipenv(python_executable)
+    #actualizar_pipenv(python_executable)
     instalar_proyecto()
 
 if __name__ == "__main__":

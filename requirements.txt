@@ -1,0 +1,6 @@
+reportlab==3.5.67
+python-dotenv==0.19.2
+pipenv==2021.5.29
+winshell==0.6
+pywin32==301
+colorlog==6.6.0

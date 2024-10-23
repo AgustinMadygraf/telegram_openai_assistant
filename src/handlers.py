@@ -34,29 +34,62 @@ async def help_command(update: Update, context: CallbackContext) -> None:
     )
 
 
-def get_answer(message_str) -> None:
-    """Get answer from assistant"""
-    thread = client.beta.threads.create()
-    client.beta.threads.messages.create(
-        thread_id=thread.id, role="user", content=message_str
-    )
+def get_answer(message_str) -> str:
+    """Get answer from assistant with detailed logging."""
+    try:
+        thread = client.beta.threads.create()
+        logger.info(f"Thread created: ID={thread.id}")
 
-    run = client.beta.threads.runs.create(
-        thread_id=thread.id,
-        assistant_id=assistant_id,
-    )
+        # Enviar el mensaje inicial al hilo
+        message = client.beta.threads.messages.create(
+            thread_id=thread.id, role="user", content=message_str
+        )
+        logger.info(f"Message sent: ID={message.id}, Content={message_str}")
 
-    # Poll for the response (this could be improved with async calls)
-    while True:
-        run = client.beta.threads.runs.retrieve(thread_id=thread.id, run_id=run.id)
-        logger.info(run.status)
-        if run.status == "completed":
-            break
-        time.sleep(1)
+        # Crear una ejecución (run) del asistente
+        run = client.beta.threads.runs.create(
+            thread_id=thread.id,
+            assistant_id=assistant_id,
+        )
+        logger.info(f"Run started: ID={run.id}, Status={run.status}")
 
-    messages = client.beta.threads.messages.list(thread_id=thread.id)
-    response = messages.dict()["data"][0]["content"][0]["text"]["value"]
-    return response
+        # Polling para obtener la respuesta
+        max_attempts = 10
+        attempt = 0
+
+        while attempt < max_attempts:
+            run = client.beta.threads.runs.retrieve(thread_id=thread.id, run_id=run.id)
+            logger.info(f"Attempt {attempt}: Run Status={run.status}, Run ID={run.id}")
+
+            # Registrar detalles adicionales si es necesario
+            logger.info(f"Run details: {run}")
+
+            if run.status == "completed":
+                logger.info(f"Run completed successfully: Run ID={run.id}")
+                break
+
+            time.sleep(1)
+            attempt += 1
+
+        if attempt == max_attempts:
+            logger.error(f"Run did not complete after {max_attempts} attempts: Run ID={run.id}")
+            return "Sorry, the response took too long."
+
+        # Obtener los mensajes del hilo
+        messages = client.beta.threads.messages.list(thread_id=thread.id)
+        if not messages.dict() or not messages.dict().get("data"):
+            logger.error("Received empty or invalid response from OpenAI API.")
+            return "Sorry, I couldn't get a valid response."
+
+        response = messages.dict()["data"][0]["content"][0]["text"]["value"]
+        logger.info(f"Response received: {response}")
+
+        return response
+
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        return "Sorry, an error occurred while retrieving the answer."
+
 
 
 async def process_message(update: Update, context: CallbackContext) -> None:

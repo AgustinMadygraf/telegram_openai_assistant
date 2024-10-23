@@ -1,5 +1,7 @@
-# storage.py
-# Handles storing and retrieving questions/answers
+"""
+storage.py
+Handles storing and retrieving questions/answers
+"""
 
 import json
 from pathlib import Path

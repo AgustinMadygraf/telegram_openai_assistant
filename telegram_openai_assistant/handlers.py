@@ -1,4 +1,8 @@
-# handlers.py
+"""
+handlers.py
+Handlers for the bot.
+"""
+
 import time
 import datetime
 from telegram.ext import CallbackContext

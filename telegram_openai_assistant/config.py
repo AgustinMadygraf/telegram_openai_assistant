@@ -1,6 +1,9 @@
-# config.py
-from dotenv import load_dotenv
+"""
+config.py
+Configuration file for the bot.
+"""
 import os
+from dotenv import load_dotenv
 
 # Load the environment variables from the .env file.
 load_dotenv()

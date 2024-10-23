@@ -1,4 +1,7 @@
-# bot.py
+"""
+bot.py
+Entry point for the bot.
+"""
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 from .config import telegram_token
 from .handlers import start, help_command, process_message

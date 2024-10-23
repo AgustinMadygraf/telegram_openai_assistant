@@ -1,7 +1,12 @@
-import openai as client
-import ipdb
+"""
+test.py
+This file contains a script to test the OpenAI API.
+"""
 import time
 import sys
+import openai as client
+import ipdb
+
 
 # Replace 'your-assistant-id' with the Assistant ID from OpenAI's platform
 assistant_id = ""

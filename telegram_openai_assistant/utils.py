@@ -1,4 +1,8 @@
-# utils.py
+"""
+utils.py
+This file contains utility functions for the Telegram bot.
+"""
+
 import json
 from pathlib import Path
 import datetime

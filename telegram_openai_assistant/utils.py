@@ -8,8 +8,8 @@ from pathlib import Path
 import datetime
 
 # Paths to the files
-message_count_file = Path("message_count.json")
-qa_file = Path("questions_answers.json")
+message_count_file = Path("C:/AppServ/www/telegram_openai_assistant/message_count.json")
+qa_file = Path("C:/AppServ/www/telegram_openai_assistant/questions_answers.json")
 
 def get_message_count():
     """Retrieve the current message count."""
@@ -20,21 +20,29 @@ def get_message_count():
 
 def update_message_count(new_count):
     """Update the message count in the file."""
-    with open(message_count_file, 'w') as file:
-        json.dump({"date": str(datetime.date.today()), "count": new_count}, file)
+    try:
+        with open(message_count_file, 'w') as file:
+            json.dump({"date": str(datetime.date.today()), "count": new_count}, file)
+    except PermissionError as e:
+        print(f"Permission denied: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
 
 def save_qa(telegram_id, username, question, answer):
-    """Save question and answer pairs to a file with user information."""
-    if not qa_file.exists():
-        with open(qa_file, 'w') as file:
-            json.dump([], file)
-    with open(qa_file, 'r+') as file:
-        data = json.load(file)
-        data.append({
-            "telegram_id": telegram_id,
-            "username": username,
-            "question": question,
-            "answer": answer
-        })
-        file.seek(0)
-        json.dump(data, file, indent=4)
+    """Save question and answer pairs to a file along with user information."""
+    try:
+        with open(qa_file, 'r+') as file:
+            data = json.load(file)
+            data.append({
+                "telegram_id": telegram_id,
+                "username": username,
+                "question": question,
+                "answer": answer
+            })
+            file.seek(0)
+            json.dump(data, file, indent=4)
+    except PermissionError as e:
+        print(f"Permission denied: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")

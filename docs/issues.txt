@@ -1,0 +1,18 @@
+Starting the bot...
+Polling for messages...
+in_progress
+in_progress
+completed
+No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\usuario\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\ext\_application.py", line 1195, in process_update
+    await coroutine
+  File "C:\Users\usuario\AppData\Local\Programs\Python\Python311\Lib\site-packages\telegram\ext\_basehandler.py", line 153, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AppServ\www\telegram_openai_assistant\telegram_openai_assistant\handlers.py", line 73, in process_message
+    update_message_count(count + 1)
+  File "C:\AppServ\www\telegram_openai_assistant\telegram_openai_assistant\utils.py", line 23, in update_message_count
+    with open(message_count_file, 'w') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'message_count.json'

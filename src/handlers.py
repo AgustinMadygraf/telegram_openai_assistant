@@ -11,7 +11,10 @@ from openai import OpenAI
 
 from .config import assistant_id, client_api_key
 from .utils import get_message_count, update_message_count, save_qa
+from .logs.config_logger import LoggerConfigurator
 
+# Configuración del logger al inicio del script
+logger = LoggerConfigurator().configure()
 
 client = OpenAI(api_key=client_api_key)
 

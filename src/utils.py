@@ -5,7 +5,11 @@ This file contains utility functions for the Telegram bot.
 
 import json
 from pathlib import Path
-import datetime
+import 
+from .logs.config_logger import LoggerConfigurator
+
+# Configuración del logger al inicio del script
+logger = LoggerConfigurator().configure()
 
 # Paths to the files
 message_count_file = Path("C:/AppServ/www/telegram_openai_assistant/message_count.json")

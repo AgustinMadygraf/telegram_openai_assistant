@@ -5,7 +5,7 @@ This file contains utility functions for the Telegram bot.
 
 import json
 from pathlib import Path
-import 
+import datetime
 from .logs.config_logger import LoggerConfigurator
 
 # Configuración del logger al inicio del script
@@ -28,9 +28,9 @@ def update_message_count(new_count):
         with open(message_count_file, 'w') as file:
             json.dump({"date": str(datetime.date.today()), "count": new_count}, file)
     except PermissionError as e:
-        print(f"Permission denied: {e}")
+        logger.error(f"Permission denied: {e}")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.error(f"An error occurred: {e}")
 
 
 def save_qa(telegram_id, username, question, answer):
@@ -47,6 +47,6 @@ def save_qa(telegram_id, username, question, answer):
             file.seek(0)
             json.dump(data, file, indent=4)
     except PermissionError as e:
-        print(f"Permission denied: {e}")
+        logger.error(f"Permission denied: {e}")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.error(f"An error occurred: {e}")

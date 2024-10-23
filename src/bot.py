@@ -21,9 +21,9 @@ def setup_handlers(app):
 
 def main():
     """Main function to run the bot."""
-    print("Starting the bot...")
+    logger.info("Starting the bot...")
     setup_handlers(application)
-    print("Polling for messages...")
+    logger.info("Polling for messages...")
     application.run_polling()
 
 if __name__ == "__main__":

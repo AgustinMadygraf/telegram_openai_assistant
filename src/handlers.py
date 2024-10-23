@@ -49,7 +49,7 @@ def get_answer(message_str) -> None:
     # Poll for the response (this could be improved with async calls)
     while True:
         run = client.beta.threads.runs.retrieve(thread_id=thread.id, run_id=run.id)
-        print(run.status)
+        logger.info(run.status)
         if run.status == "completed":
             break
         time.sleep(1)

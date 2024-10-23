@@ -4,7 +4,7 @@ Entry point for the bot.
 """
 
 import os
-from telegram_openai_assistant.bot import main
+from src.bot import main
 
 if __name__ == "__main__":
     #limpiar pantalla

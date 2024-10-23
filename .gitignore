@@ -3,3 +3,5 @@ __pycache__
 .env
 telegram_openai_assistant.egg-info/
 docs/00-Prompt-for-ProjectAnalysis.md
+message_count.json
+questions_answers.json
